@@ -5,6 +5,8 @@ import grafika.model.GShape;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import java.awt.BorderLayout;
 
 public class MainFrame extends JFrame {
@@ -14,18 +16,24 @@ public class MainFrame extends JFrame {
     private final JLabel status = new JLabel(" ");
 
     public MainFrame() {
-        super("Grafika Komputerowa – edytor");
+        super("Grafika Komputerowa");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        add(new ControlPanel(drawing, canvas), BorderLayout.WEST);
-        add(canvas, BorderLayout.CENTER);
-        add(status, BorderLayout.SOUTH);
+        JPanel vectorTab = new JPanel(new BorderLayout());
+        vectorTab.add(new ControlPanel(drawing, canvas), BorderLayout.WEST);
+        vectorTab.add(canvas, BorderLayout.CENTER);
+        vectorTab.add(status, BorderLayout.SOUTH);
+
+        JTabbedPane tabs = new JTabbedPane();
+        tabs.addTab("Edytor wektorowy", vectorTab);
+        tabs.addTab("Przeglądarka obrazów", new ImageViewerPanel());
+        add(tabs, BorderLayout.CENTER);
 
         drawing.addChangeListener(this::updateStatus);
         updateStatus();
 
-        setSize(1000, 700);
+        setSize(1100, 750);
         setLocationRelativeTo(null);
     }
 
